@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "892646392392",
+    "firebase_url": "https://askit-bc935.firebaseio.com",
+    "project_id": "askit-bc935",
+    "storage_bucket": "askit-bc935.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892646392392:android:f3c6f5e30f8b94ae058e7d",
+        "android_client_info": {
+          "package_name": "com.example.askanything"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892646392392-p10ptu88t0bnctth9fokjuoaftka7jsh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZrrTRw7VW95e1LFfKcao83TdJfQqKEPs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892646392392-p10ptu88t0bnctth9fokjuoaftka7jsh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

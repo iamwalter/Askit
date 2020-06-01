@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/HomeFragment"
-        android:name="com.example.askanything.HomeFragment"
+        android:name="com.example.askanything.fragments.HomeFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_home">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/QuestionFragment"
-        android:name="com.example.askanything.QuestionFragment"
+        android:name="com.example.askanything.fragments.QuestionFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_question">
 
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/addQuestionFragment"
-        android:name="com.example.askanything.AddQuestionFragment"
+        android:name="com.example.askanything.fragments.AddQuestionFragment"
         android:label="fragment_add_question"
         tools:layout="@layout/fragment_add_question" >
         <action

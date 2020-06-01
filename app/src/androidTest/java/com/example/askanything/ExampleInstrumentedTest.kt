@@ -2,6 +2,9 @@ package com.example.askanything
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.askanything.model.Question
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 import org.junit.Test
 import org.junit.runner.RunWith
