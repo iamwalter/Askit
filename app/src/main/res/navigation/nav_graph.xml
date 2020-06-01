@@ -24,5 +24,17 @@
         <action
             android:id="@+id/action_QuestionFragment_To_HomeFragment"
             app:destination="@id/HomeFragment" />
+        <action
+            android:id="@+id/action_QuestionFragment_to_addQuestionFragment"
+            app:destination="@id/addQuestionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addQuestionFragment"
+        android:name="com.example.askanything.AddQuestionFragment"
+        android:label="fragment_add_question"
+        tools:layout="@layout/fragment_add_question" >
+        <action
+            android:id="@+id/action_addQuestionFragment_to_QuestionFragment"
+            app:destination="@id/QuestionFragment" />
     </fragment>
 </navigation>
