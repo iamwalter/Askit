@@ -27,7 +27,8 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel.email.observe(this, Observer { email ->
             loginViewModel.password.observe(this, Observer { password ->
-                btnLogin.isEnabled = (email.isNotBlank() && password.isNotBlank())
+                btnRegister.isEnabled = (email.isNotBlank() && password.isNotBlank())
+                btnLogin.isEnabled = btnRegister.isEnabled
             })
         })
 
@@ -38,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel.success.observe(this, Observer { success ->
             if (success) {
+                loginViewModel.reset()
                 finish()
             }
         })
@@ -53,8 +55,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener {
+            loginViewModel.login()
+        }
+
+        btnRegister.setOnClickListener {
             loginViewModel.createAccount()
         }
     }
-
 }

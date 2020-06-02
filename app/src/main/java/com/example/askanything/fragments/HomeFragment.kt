@@ -1,16 +1,16 @@
 package com.example.askanything.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import com.example.askanything.MainActivity
 import com.example.askanything.QuestionViewModel
 import com.example.askanything.R
+import com.example.askanything.login.LoginActivity
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_question.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -43,7 +43,10 @@ class HomeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.logout -> viewModel.logout()
+            R.id.logout -> {
+                viewModel.logout()
+                requireActivity().finish()
+            }
         }
 
         return super.onOptionsItemSelected(item)

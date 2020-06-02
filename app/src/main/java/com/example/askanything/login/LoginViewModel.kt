@@ -16,6 +16,10 @@ class LoginViewModel() : ViewModel() {
     var success = MutableLiveData<Boolean>()
     var error = MutableLiveData<String>()
 
+    init {
+        reset()
+    }
+
     fun createAccount() {
         auth.createUserWithEmailAndPassword(email.value.toString(), password.value.toString())
             .addOnCompleteListener {
@@ -24,5 +28,22 @@ class LoginViewModel() : ViewModel() {
             .addOnFailureListener {
                 error.value = it.message
             }
-        }
+    }
+
+    fun login() {
+        auth.signInWithEmailAndPassword(email.value.toString(), password.value.toString())
+            .addOnCompleteListener {
+                success.value = it.isSuccessful
+            }
+            .addOnFailureListener {
+                error.value = it.message
+            }
+    }
+
+    fun reset() {
+        email.value = ""
+        password.value =""
+        success.value = false
+        error.value = ""
+    }
 }

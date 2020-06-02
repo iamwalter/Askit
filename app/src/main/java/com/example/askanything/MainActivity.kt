@@ -33,7 +33,9 @@ class MainActivity : AppCompatActivity() {
 
         if (currentUser == null) {
             // navigate to create user/login
-            startActivity(Intent(this, LoginActivity::class.java))
+            val loginIntent = Intent(this, LoginActivity::class.java)
+            loginIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+            startActivity(loginIntent)
         } else {
             initNavigation()
         }
