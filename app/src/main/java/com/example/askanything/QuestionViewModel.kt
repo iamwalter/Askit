@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.askanything.database.QuestionRepository
-import com.example.askanything.model.Option
 import com.example.askanything.model.Question
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -24,7 +23,7 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun getAllQuestions() {
-        questionRepository.getQuestions { it ->
+        questionRepository.getQuestion { it ->
             val questionList = arrayListOf<Question>()
             for (q in it.children) {
                 val question = q.getValue(Question::class.java)
@@ -38,7 +37,7 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun getCurrentQuestion() {
-        questionRepository.getQuestions {
+        questionRepository.getQuestion {
             for (q in it.children) {
                 val question = q.getValue(Question::class.java)
 

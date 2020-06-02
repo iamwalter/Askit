@@ -31,13 +31,12 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
         val currentUser = auth.currentUser
 
+        initNavigation()
+
         if (currentUser == null) {
             // navigate to create user/login
             val loginIntent = Intent(this, LoginActivity::class.java)
-            loginIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(loginIntent)
-        } else {
-            initNavigation()
         }
     }
 

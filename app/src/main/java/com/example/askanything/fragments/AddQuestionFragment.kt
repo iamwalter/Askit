@@ -11,6 +11,8 @@ import com.example.askanything.QuestionViewModel
 import com.example.askanything.R
 import com.example.askanything.model.Option
 import com.example.askanything.model.Question
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_add_question.*
 
 /**
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_add_question.*
 class AddQuestionFragment : Fragment() {
 
     private lateinit var viewModel : QuestionViewModel
+    private var auth = Firebase.auth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +51,7 @@ class AddQuestionFragment : Fragment() {
     private fun handleSubmitQuestion() {
         val option1 = Option(etOption1.text.toString(), 0)
         val option2 = Option(etOption2.text.toString(), 0)
-        val question = Question(etQuestion.text.toString(), listOf(option1, option2))
+        val question = Question(etQuestion.text.toString(), listOf(option1, option2), auth.uid)
 
         if (question.question.isBlank() || option1.option.isBlank() || option2.option.isBlank()) {
             Toast.makeText(context, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
