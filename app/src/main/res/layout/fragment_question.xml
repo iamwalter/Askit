@@ -6,17 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".fragments.QuestionFragment">
 
-    <TextView
-        android:id="@+id/textview_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is the second fragment, you can add questions here"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fabAddQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -24,5 +15,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvQuestions"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,11 +27,17 @@ class QuestionRepository(var context: Context) {
 
     fun addQuestion(question: Question) {
         val questionRef = reference.push()
+        question.authorId = "Walter"
         questionRef.setValue(question).addOnCompleteListener {
             Toast.makeText(context, "done did it", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(context, "done didn't do it", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun voteOnQuestion(question: Question, questionId: String, option: Int) {
+        val newVotes = question.options[option].votes + 1
+        reference.child(questionId).child("options/$option/votes").setValue(newVotes)
     }
 
     // todo; functions like addquestion, bla bla bla
