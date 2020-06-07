@@ -22,7 +22,7 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
     private var auth: FirebaseAuth = Firebase.auth
 
     private var currentQuestionId: String = ""
-    var currentQuestion = MutableLiveData<Question>()
+    var currentQuestion = MutableLiveData<Question?>()
     var allQuestions = MutableLiveData<List<Question>>()
 
     fun logout() {
@@ -34,8 +34,10 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
             val questionList = arrayListOf<Question>()
             for (q in it.children) {
                 val question = q.getValue(Question::class.java)
-                question?.let {
-                    questionList.add(it)
+                if (question != null) {
+                    if (question.authorId == auth.uid) {
+                        questionList.add(question)
+                    }
                 }
             }
 
@@ -47,38 +49,39 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
         questionRepository.getQuestion {
             for (q in it.children) {
                 var question = q.getValue(Question::class.java)
-
-
-
                 if (question != null && question.authorId != auth.uid) {
                     // check if question is already answered
-                    answeredRef.child(auth.uid!!).child(q.key!!).addListenerForSingleValueEvent( object:
-                        ValueEventListener {
-                        override fun onDataChange(dataSnapshot: DataSnapshot) {
-                            val answered = dataSnapshot.exists()
+                    answeredRef.child(auth.uid!!).child(q.key!!)
+                        .addListenerForSingleValueEvent(object :
+                            ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                val answered = dataSnapshot.exists()
 
-                            if (answered) {
-                                println("is answered")
-
-                            } else {
-                                currentQuestion.value = question
-                                currentQuestionId = q.key.toString()
+                                if (answered) {
+                                    println("is answered")
+                                } else {
+                                    currentQuestion.value = question
+                                    currentQuestionId = q.key.toString()
+                                }
                             }
-                        }
 
-                        override fun onCancelled(databaseError: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
-                    })
-                }
-
-
+                            override fun onCancelled(databaseError: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+                        })
                 }
             }
         }
+    }
 
     fun voteOnQuestion(option: Int) {
-        currentQuestion.value?.let { questionRepository.voteOnQuestion(it, currentQuestionId, option) }
+        currentQuestion.value?.let {
+            questionRepository.voteOnQuestion(
+                it,
+                currentQuestionId,
+                option
+            )
+        }
     }
 
     fun addQuestion(question: Question) {

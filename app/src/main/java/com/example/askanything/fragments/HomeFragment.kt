@@ -57,10 +57,15 @@ class HomeFragment : Fragment() {
 
         viewModel.getCurrentQuestion()
 
-        viewModel.currentQuestion.observe(viewLifecycleOwner, Observer {
-            tvCurrentQuestion.text = it.question
-            btnOption1.text = it.options[0].option
-            btnOption2.text = it.options[1].option
+        viewModel.currentQuestion.observe(viewLifecycleOwner, Observer { question ->
+
+            if (question == null) {
+                tvCurrentQuestion.text = "No Questions Left"
+            } else {
+               tvCurrentQuestion.text = question.question
+                btnOption1.text = question.options[0].option
+                btnOption2.text = question.options[1].option
+            }
         })
     }
 
