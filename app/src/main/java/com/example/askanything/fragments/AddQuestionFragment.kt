@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.askanything.QuestionViewModel
 import com.example.askanything.R
 import com.example.askanything.model.Option
@@ -57,6 +58,7 @@ class AddQuestionFragment : Fragment() {
             Toast.makeText(context, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
         } else {
             viewModel.addQuestion(question)
+            findNavController().navigateUp()
         }
     }
 
