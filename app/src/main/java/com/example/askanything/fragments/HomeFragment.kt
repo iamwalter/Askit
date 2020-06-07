@@ -61,8 +61,10 @@ class HomeFragment : Fragment() {
         viewModel.getCurrentQuestion()
 
         viewModel.currentQuestion.observe(viewLifecycleOwner, Observer { question ->
+            hideLoadingBar()
 
             if (question == null) {
+                // Todo: Make better no questions layout
                 tvCurrentQuestion.text = "No Questions Left to answer"
             } else {
                tvCurrentQuestion.text = question.question
@@ -80,8 +82,9 @@ class HomeFragment : Fragment() {
         })
     }
 
+
     private fun initViews() {
-        btnNextQuestion.visibility = View.INVISIBLE
+        showLoadingBar()
 
         btnOption1.setOnClickListener {
             handleVote(0)
@@ -90,8 +93,6 @@ class HomeFragment : Fragment() {
         btnOption2.setOnClickListener {
             handleVote(1)
         }
-
-
     }
 
     private fun handleVote(option: Int) {
@@ -112,6 +113,26 @@ class HomeFragment : Fragment() {
 
             viewModel.voteOnQuestion(option)
         }
+    }
+
+    private fun showLoadingBar() {
+        homeProgressBar.visibility = View.VISIBLE
+
+        tvCurrentQuestion.visibility = View.INVISIBLE
+        btnOption1.visibility = View.INVISIBLE
+        btnOption2.visibility = View.INVISIBLE
+        tvOr.visibility = View.INVISIBLE
+        btnNextQuestion.visibility = View.INVISIBLE
+    }
+
+    private fun hideLoadingBar() {
+        homeProgressBar.visibility = View.INVISIBLE
+
+        tvCurrentQuestion.visibility = View.VISIBLE
+        btnOption1.visibility = View.VISIBLE
+        btnOption2.visibility = View.VISIBLE
+        tvOr.visibility = View.VISIBLE
+        btnNextQuestion.visibility = View.VISIBLE
     }
 }
 

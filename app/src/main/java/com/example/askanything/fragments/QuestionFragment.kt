@@ -44,6 +44,7 @@ class QuestionFragment : Fragment() {
         viewModel.getAllQuestions()
 
         viewModel.allQuestions.observe(viewLifecycleOwner, Observer {
+            questionsProgressBar?.visibility = View.INVISIBLE
             questionAdapter.questions.clear()
             questionAdapter.questions.addAll(it)
             questionAdapter.notifyDataSetChanged()
@@ -54,6 +55,7 @@ class QuestionFragment : Fragment() {
         rvQuestions.adapter = questionAdapter
         rvQuestions.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+        questionsProgressBar?.visibility = View.VISIBLE
         fabAddQuestion.setOnClickListener {
             findNavController().navigate(R.id.action_QuestionFragment_to_addQuestionFragment)
         }
