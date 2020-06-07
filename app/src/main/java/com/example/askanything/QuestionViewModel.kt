@@ -53,7 +53,7 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
                 if (question != null && question.authorId != auth.uid) {
                     // check if question is already answered
                     answeredRef.child(auth.uid!!).child(q.key!!)
-                        .addListenerForSingleValueEvent(object :
+                        .addValueEventListener(object :
                             ValueEventListener {
                             override fun onDataChange(dataSnapshot: DataSnapshot) {
                                 val answered = dataSnapshot.exists()
@@ -64,15 +64,17 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
                                     return
                                 }
 
-                                currentQuestion.value = null
                             }
 
                             override fun onCancelled(databaseError: DatabaseError) {
-                                TODO("Not yet implemented")
+                                System.err.println(databaseError.message)
                             }
                         })
                 }
             }
+
+
+            currentQuestion.value = null
         }
     }
 

@@ -105,7 +105,7 @@ class HomeFragment : Fragment() {
         btnNextQuestion.setOnClickListener {
             btnOption1.isEnabled = true
             btnOption2.isEnabled = true
-            btnNextQuestion.visibility = View.VISIBLE
+            btnNextQuestion.visibility = View.INVISIBLE
 
             tvAnswer1Percentage.visibility = View.INVISIBLE
             tvAnswer2Percentage.visibility = View.INVISIBLE
