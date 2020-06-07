@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.askanything.database.QuestionRepository
+import com.example.askanything.model.Option
 import com.example.askanything.model.Question
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -57,12 +58,13 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
                             override fun onDataChange(dataSnapshot: DataSnapshot) {
                                 val answered = dataSnapshot.exists()
 
-                                if (answered) {
-                                    println("is answered")
-                                } else {
+                                if (!answered) {
                                     currentQuestion.value = question
                                     currentQuestionId = q.key.toString()
+                                    return
                                 }
+
+                                currentQuestion.value = null
                             }
 
                             override fun onCancelled(databaseError: DatabaseError) {

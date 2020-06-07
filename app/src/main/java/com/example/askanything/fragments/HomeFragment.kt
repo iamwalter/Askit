@@ -11,6 +11,9 @@ import com.example.askanything.QuestionViewModel
 import com.example.askanything.R
 import com.example.askanything.login.LoginActivity
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.question_item.*
+import kotlin.math.roundToInt
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -60,26 +63,54 @@ class HomeFragment : Fragment() {
         viewModel.currentQuestion.observe(viewLifecycleOwner, Observer { question ->
 
             if (question == null) {
-                tvCurrentQuestion.text = "No Questions Left"
+                tvCurrentQuestion.text = "No Questions Left to answer"
             } else {
                tvCurrentQuestion.text = question.question
                 btnOption1.text = question.options[0].option
                 btnOption2.text = question.options[1].option
+                val totalVotes = question.options[0].votes + question.options[1].votes
+                if (totalVotes != 0) {
+                    tvAnswer1Percentage.text = (question.options[0].votes.toDouble() / totalVotes * 100).roundToInt().toString() + "%"
+                    tvAnswer2Percentage.text = (question.options[1].votes.toDouble() / totalVotes * 100).roundToInt().toString() + "%"
+                } else {
+                    tvAnswer1Percentage.text = "0%"
+                    tvAnswer2Percentage.text = "0%"
+                }
             }
         })
     }
 
     private fun initViews() {
+        btnNextQuestion.visibility = View.INVISIBLE
+
         btnOption1.setOnClickListener {
-            viewModel.voteOnQuestion(0)
+            handleVote(0)
         }
 
         btnOption2.setOnClickListener {
-            viewModel.voteOnQuestion(1)
+            handleVote(1)
         }
 
+
+    }
+
+    private fun handleVote(option: Int) {
+        btnOption1.isEnabled = false
+        btnOption2.isEnabled = false
+        btnNextQuestion.visibility = View.VISIBLE
+
+        tvAnswer1Percentage.visibility = View.VISIBLE
+        tvAnswer2Percentage.visibility = View.VISIBLE
+
         btnNextQuestion.setOnClickListener {
-            viewModel.getCurrentQuestion()
+            btnOption1.isEnabled = true
+            btnOption2.isEnabled = true
+            btnNextQuestion.visibility = View.VISIBLE
+
+            tvAnswer1Percentage.visibility = View.INVISIBLE
+            tvAnswer2Percentage.visibility = View.INVISIBLE
+
+            viewModel.voteOnQuestion(option)
         }
     }
 }
