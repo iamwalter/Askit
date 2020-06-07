@@ -7,10 +7,17 @@ import com.example.askanything.database.QuestionRepository
 import com.example.askanything.model.Question
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class QuestionViewModel(application: Application) : AndroidViewModel(application) {
     private var questionRepository = QuestionRepository(application)
+
+    private var answeredRef: DatabaseReference = Firebase.database.getReference("Answered")
 
     private var auth: FirebaseAuth = Firebase.auth
 
@@ -39,15 +46,36 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
     fun getCurrentQuestion() {
         questionRepository.getQuestion {
             for (q in it.children) {
-                val question = q.getValue(Question::class.java)
+                var question = q.getValue(Question::class.java)
 
-                if (question != null && question.authorId != "Walter") { // TODO: AUTH ID
-                    currentQuestion.value = q.getValue(Question::class.java)
-                    currentQuestionId = q.key.toString()
+
+
+                if (question != null && question.authorId != auth.uid) {
+                    // check if question is already answered
+                    answeredRef.child(auth.uid!!).child(q.key!!).addListenerForSingleValueEvent( object:
+                        ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            val answered = dataSnapshot.exists()
+
+                            if (answered) {
+                                println("is answered")
+
+                            } else {
+                                currentQuestion.value = question
+                                currentQuestionId = q.key.toString()
+                            }
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
+                }
+
+
                 }
             }
         }
-    }
 
     fun voteOnQuestion(option: Int) {
         currentQuestion.value?.let { questionRepository.voteOnQuestion(it, currentQuestionId, option) }
