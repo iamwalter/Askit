@@ -1,17 +1,18 @@
 package com.example.askanything.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.askanything.MainActivity
+import androidx.navigation.fragment.findNavController
 import com.example.askanything.QuestionViewModel
 import com.example.askanything.R
-import com.example.askanything.login.LoginActivity
+import com.example.askanything.model.Option
+import com.example.askanything.model.Question
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.question_item.*
+import kotlinx.android.synthetic.main.fragment_no_questions.*
+import kotlinx.android.synthetic.main.fragment_yes_questions.*
 import kotlin.math.roundToInt
 
 
@@ -64,20 +65,9 @@ class HomeFragment : Fragment() {
             hideLoadingBar()
 
             if (question == null) {
-                // Todo: Make better no questions layout
-                tvCurrentQuestion.text = "No Questions Left to answer"
+                updateLayoutNoQuestions()
             } else {
-               tvCurrentQuestion.text = question.question
-                btnOption1.text = question.options[0].option
-                btnOption2.text = question.options[1].option
-                val totalVotes = question.options[0].votes + question.options[1].votes
-                if (totalVotes != 0) {
-                    tvAnswer1Percentage.text = (question.options[0].votes.toDouble() / totalVotes * 100).roundToInt().toString() + "%"
-                    tvAnswer2Percentage.text = (question.options[1].votes.toDouble() / totalVotes * 100).roundToInt().toString() + "%"
-                } else {
-                    tvAnswer1Percentage.text = "0%"
-                    tvAnswer2Percentage.text = "0%"
-                }
+                updateLayoutYesQuestions(question)
             }
         })
     }
@@ -85,6 +75,10 @@ class HomeFragment : Fragment() {
 
     private fun initViews() {
         showLoadingBar()
+
+        btnNoQuestions.setOnClickListener {
+            findNavController().navigate(R.id.action_HomeFragment_to_QuestionFragment)
+        }
 
         btnOption1.setOnClickListener {
             handleVote(0)
@@ -96,43 +90,73 @@ class HomeFragment : Fragment() {
     }
 
     private fun handleVote(option: Int) {
-        btnOption1.isEnabled = false
-        btnOption2.isEnabled = false
-        btnNextQuestion.visibility = View.VISIBLE
-
-        tvAnswer1Percentage.visibility = View.VISIBLE
-        tvAnswer2Percentage.visibility = View.VISIBLE
+        updateLayoutVoted()
 
         btnNextQuestion.setOnClickListener {
-            btnOption1.isEnabled = true
-            btnOption2.isEnabled = true
-            btnNextQuestion.visibility = View.INVISIBLE
-
-            tvAnswer1Percentage.visibility = View.INVISIBLE
-            tvAnswer2Percentage.visibility = View.INVISIBLE
+            updateLayoutWaitingOnVote()
 
             viewModel.voteOnQuestion(option)
         }
     }
 
-    private fun showLoadingBar() {
-        homeProgressBar.visibility = View.VISIBLE
+    private fun updateLayoutVoted() {
+        btnOption1.isEnabled = false
+        btnOption2.isEnabled = false
+        btnNextQuestion.visibility = View.VISIBLE
+        tvAnswer1Percentage.visibility = View.VISIBLE
+        tvAnswer2Percentage.visibility = View.VISIBLE
+    }
 
-        tvCurrentQuestion.visibility = View.INVISIBLE
-        btnOption1.visibility = View.INVISIBLE
-        btnOption2.visibility = View.INVISIBLE
-        tvOr.visibility = View.INVISIBLE
+    private fun updateLayoutWaitingOnVote() {
+        btnOption1.isEnabled = true
+        btnOption2.isEnabled = true
         btnNextQuestion.visibility = View.INVISIBLE
+        tvAnswer1Percentage.visibility = View.INVISIBLE
+        tvAnswer2Percentage.visibility = View.INVISIBLE
+    }
+
+    private fun updateLayoutNoQuestions() {
+        no_layout.visibility = View.VISIBLE
+        yes_layout.visibility = View.GONE
+    }
+
+    private fun updateLayoutYesQuestions(question: Question) {
+        if (yes_layout.visibility != View.VISIBLE) {
+            no_layout.visibility = View.GONE
+            yes_layout.visibility = View.VISIBLE
+        }
+
+        val option1 = question.options[0]
+        val option2 = question.options[1]
+
+        tvCurrentQuestion.text = question.question
+        btnOption1.text = option1.option
+        btnOption2.text = option2.option
+
+        val totalVotes = option1.votes + option2.votes
+
+        val firstVotes = getPercentageVotes(totalVotes, option1)
+        val secondVotes = getPercentageVotes(totalVotes, option2)
+
+        tvAnswer1Percentage.text = String.format(getString(R.string.answerpercentage), firstVotes)
+        tvAnswer2Percentage.text = String.format(getString(R.string.answerpercentage), secondVotes)
+
+    }
+
+    private fun showLoadingBar() {
+        yes_layout.visibility = View.GONE
+        no_layout.visibility = View.GONE
+
+        homeProgressBar.visibility = View.VISIBLE
     }
 
     private fun hideLoadingBar() {
         homeProgressBar.visibility = View.INVISIBLE
-
-        tvCurrentQuestion.visibility = View.VISIBLE
-        btnOption1.visibility = View.VISIBLE
-        btnOption2.visibility = View.VISIBLE
-        tvOr.visibility = View.VISIBLE
-        btnNextQuestion.visibility = View.VISIBLE
     }
 }
+
+private fun getPercentageVotes(
+    totalVotes: Int,
+    option: Option
+) = if (totalVotes != 0) (option.votes.toDouble() / totalVotes * 100).roundToInt() else 0
 
