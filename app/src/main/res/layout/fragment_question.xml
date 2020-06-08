@@ -57,7 +57,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
             android:gravity="center"
-            android:text="You don't have any questions added right now, maybe try adding one?"
+            android:text="@string/you_don_t_have_any_questions_added_right_now_maybe_try_adding_one"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

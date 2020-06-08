@@ -36,7 +36,7 @@
         android:id="@+id/tvOr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="or"
+        android:text="@string/or"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnOption2"
         app:layout_constraintStart_toEndOf="@+id/btnOption1"
@@ -50,7 +50,7 @@
         android:layout_marginTop="128dp"
         android:layout_marginBottom="128dp"
         android:backgroundTint="@android:color/white"
-        android:text="Button"
+        android:text="@string/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +63,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="128dp"
         android:backgroundTint="@android:color/white"
-        android:text="Button"
+        android:text="@string/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="@string/textview"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnOption1" />
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="72dp"
-        android:text="TextView"
+        android:text="@string/textview"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnOption2" />

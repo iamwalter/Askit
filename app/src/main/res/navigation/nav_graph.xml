@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/HomeFragment"
         android:name="com.example.askanything.fragments.HomeFragment"
-        android:label="@string/first_fragment_label"
+        android:label="@string/Home_fragment_label"
         tools:layout="@layout/fragment_yes_questions">
 
         <action
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/QuestionFragment"
         android:name="com.example.askanything.fragments.QuestionFragment"
-        android:label="@string/second_fragment_label"
+        android:label="@string/questions_fragment_label"
         tools:layout="@layout/fragment_question">
 
         <action
@@ -35,8 +35,8 @@
     <fragment
         android:id="@+id/addQuestionFragment"
         android:name="com.example.askanything.fragments.AddQuestionFragment"
-        android:label="fragment_add_question"
-        tools:layout="@layout/fragment_add_question" >
+        android:label="Add Question"
+        tools:layout="@layout/fragment_add_question">
         <action
             android:id="@+id/action_addQuestionFragment_to_QuestionFragment"
             app:destination="@id/QuestionFragment" />

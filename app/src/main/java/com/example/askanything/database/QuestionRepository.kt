@@ -35,9 +35,9 @@ class QuestionRepository(var context: Context) {
     fun addQuestion(question: Question) {
         val questionRef = questionsRef.push()
         questionRef.setValue(question).addOnCompleteListener {
-            Toast.makeText(context, "done did it", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Added Question Successfully", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
-            Toast.makeText(context, "done didn't do it", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
         }
     }
 
