@@ -3,8 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.askanything.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/HomeFragment"
+        android:icon="@drawable/ic_home_black_24dp"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_home"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/QuestionFragment"
+        android:icon="@drawable/ic_question_answer_black_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_question"
         app:showAsAction="never" />
 </menu>

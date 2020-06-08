@@ -7,22 +7,38 @@
 
     <fragment
         android:id="@+id/HomeFragment"
-        android:name="com.example.askanything.HomeFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_home">
+        android:name="com.example.askanything.fragments.HomeFragment"
+        android:label="@string/Home_fragment_label"
+        tools:layout="@layout/fragment_yes_questions">
 
         <action
             android:id="@+id/action_HomeFragment_to_QuestionFragment"
-            app:destination="@id/QuestionFragment" />
+            app:destination="@id/QuestionFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/QuestionFragment"
-        android:name="com.example.askanything.QuestionFragment"
-        android:label="@string/second_fragment_label"
+        android:name="com.example.askanything.fragments.QuestionFragment"
+        android:label="@string/questions_fragment_label"
         tools:layout="@layout/fragment_question">
 
         <action
             android:id="@+id/action_QuestionFragment_To_HomeFragment"
             app:destination="@id/HomeFragment" />
+        <action
+            android:id="@+id/action_QuestionFragment_to_addQuestionFragment"
+            app:destination="@id/addQuestionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addQuestionFragment"
+        android:name="com.example.askanything.fragments.AddQuestionFragment"
+        android:label="Add Question"
+        tools:layout="@layout/fragment_add_question">
+        <action
+            android:id="@+id/action_addQuestionFragment_to_QuestionFragment"
+            app:destination="@id/QuestionFragment" />
     </fragment>
 </navigation>
