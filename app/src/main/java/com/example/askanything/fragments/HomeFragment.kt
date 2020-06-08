@@ -121,10 +121,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateLayoutYesQuestions(question: Question) {
-        if (yes_layout.visibility != View.VISIBLE) {
-            no_layout.visibility = View.GONE
-            yes_layout.visibility = View.VISIBLE
-        }
+        no_layout.visibility = View.GONE
+        yes_layout.visibility = View.VISIBLE
 
         val option1 = question.options[0]
         val option2 = question.options[1]

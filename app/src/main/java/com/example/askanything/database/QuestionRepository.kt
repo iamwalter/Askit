@@ -47,7 +47,7 @@ class QuestionRepository(var context: Context) {
         questionsRef.child(questionId).child("options/$option/votes").setValue(newVotes)
 
         // 2. log that user has voted on this question already.
-        answeredRef.child(questionId).setValue(true)
+        answeredRef.child(questionId).setValue(question.options[option].option)
     }
 
     // todo; functions like addquestion, bla bla bla
