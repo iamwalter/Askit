@@ -20,6 +20,8 @@ class LoginViewModel() : ViewModel() {
         reset()
     }
 
+    fun isLoggedIn() = auth.currentUser != null
+
     fun createAccount() {
         auth.createUserWithEmailAndPassword(email.value.toString(), password.value.toString())
             .addOnCompleteListener {

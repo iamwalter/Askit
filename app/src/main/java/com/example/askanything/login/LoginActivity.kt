@@ -1,11 +1,13 @@
 package com.example.askanything.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.askanything.MainActivity
 
 import com.example.askanything.R
 import kotlinx.android.synthetic.main.activity_login.*
@@ -20,6 +22,20 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         initViewModel()
         initViews()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        navigateToMainActivity()
+    }
+
+    private fun navigateToMainActivity() {
+        if (loginViewModel.isLoggedIn()) {
+            val intent = Intent(this, MainActivity::class.java)
+            loginViewModel.reset()
+            startActivity(intent)
+        }
     }
 
     private fun initViewModel() {
@@ -39,11 +55,12 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel.success.observe(this, Observer { success ->
             if (success) {
-                loginViewModel.reset()
-                finish()
+                navigateToMainActivity()
             }
         })
     }
+
+
 
     private fun initViews() {
         etEmail.addTextChangedListener {

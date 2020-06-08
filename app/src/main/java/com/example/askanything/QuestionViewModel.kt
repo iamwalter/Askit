@@ -47,11 +47,12 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun getCurrentQuestion() {
+
         questionRepository.getQuestion {
             for (q in it.children) {
                 var question = q.getValue(Question::class.java)
                 if (question != null && question.authorId != auth.uid) {
-                    // check if question is already answered
+
                     answeredRef.child(auth.uid!!).child(q.key!!)
                         .addValueEventListener(object :
                             ValueEventListener {
