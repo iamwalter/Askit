@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.askanything.QuestionViewModel
 import com.example.askanything.R
 import kotlinx.android.synthetic.main.fragment_question.*
-import kotlinx.android.synthetic.main.fragment_question.view.*
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -45,6 +44,9 @@ class QuestionFragment : Fragment() {
 
         viewModel.allQuestions.observe(viewLifecycleOwner, Observer {
             questionsProgressBar?.visibility = View.INVISIBLE
+
+            clNoQuestions.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+
             questionAdapter.questions.clear()
             questionAdapter.questions.addAll(it)
             questionAdapter.notifyDataSetChanged()
